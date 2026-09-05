@@ -42,10 +42,12 @@ Re-run one selected fold from the repository root with:
 
 ## Midsize deployment promotion
 
-The six highlighted Phase-13 folds are now promoted to the midsize `AI` and
-`deliverable3` branches with a velocity-only GRU graph. This avoids allocating
-the unused 12,800-byte hidden-state output in Midsize. The promoted ABI is
-`tcn64i8x6-gru64f32-p13-v3`, and calibration is 10,500 contiguous 40 ms bins.
+The six highlighted Phase-13 folds are promoted to firmware branch `AI` and
+GUI branch `deliverable3`. The current shared Midsize/Large GRU graph exposes
+both the 400-byte velocity sequence and the 12,800-byte hidden sequence so
+Large can query hidden[49] without a second GRU execution. Midsize ignores the
+hidden output. The deployed ABI is `tcn64i8x6-gru64f32-p13-v3`, and calibration
+is 10,500 contiguous 40 ms bins.
 
 Rebuild the exact firmware C graphs and GUI bundles with:
 
@@ -54,5 +56,5 @@ Rebuild the exact firmware C graphs and GUI bundles with:
   indy_loco/experiment/phase14_cubeai_conversion/deploy_midsize.py
 ```
 
-Large remains intentionally unchanged until the separate memlib deployment
-step.
+Large deployment is now integrated separately through the six `BCIMEM1` banks;
+that later work does not change the Phase-14 conversion metrics above.

@@ -44,3 +44,7 @@ products, FP16 residuals). Across those six demonstration folds the mean was
 0.000167 below exact KNN. This is a deployment-format check, not the paper
 estimate, and one selected fold (`loco_20170301_05` fold 1) remains negative.
 See `results/phase15_firmware_ivf_bestfolds.json`.
+
+The six packed banks are now installed in the GUI repository and consumed by
+the loader/search implementation in the firmware repository. This integration
+does not convert the other 24 folds and does not change the 30-fold result.

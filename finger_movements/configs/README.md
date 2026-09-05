@@ -14,5 +14,6 @@ every 50 ms. Its state policy is explicit in
 `history/`.
 
 Completed experiment grids and their constants are preserved with their
-scripts under `history/experiments/`. Indy configurations are isolated in the
-sibling project at `indy_loco/configs/`.
+scripts under `history/experiments/`. The sibling Indy/Loco project has no
+active `configs/` directory; its final Phase-13–15 contract is documented in
+`../../indy_loco/STATUS.md` and its model manifests.

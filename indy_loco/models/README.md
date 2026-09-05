@@ -3,8 +3,9 @@
 This directory is the authoritative model package surface for the final
 Phase-13 neural checkpoints and Phase-14 selected-fold CubeAI handoff. It
 contains six sessions, five cross-validation folds per session, and two system
-tiers. Phase-15 PC memory artifacts remain under `experiment/` until conversion
-to firmware-compatible BCIMEM/IVF.
+tiers. Phase-15 PC memory artifacts remain under `experiment/`; the six packed
+deployment banks live in the GUI repo so the firmware repo does not duplicate
+multi-megabyte runtime assets.
 
 ```text
 models/
@@ -27,8 +28,8 @@ deviation across all five validation-selected test folds.
   calibration, continuous causal EWMA, rolling 50-bin windows, and output at
   timestep 49.
 - **Large:** the identical neural checkpoint plus a fold-specific
-  GRU-hidden[49] residual-memory bank. Thirty PC evaluation banks are complete;
-  firmware-compatible BCIMEM/IVF libraries have not yet been generated.
+  GRU-hidden[49] residual-memory bank. Thirty PC evaluation banks are complete,
+  and the six highlighted folds have firmware-compatible BCIMEM/IVF images.
 
 The archived Phase-12 `.memlib` files are deliberately absent from the active
 Large folders. They were built against older checkpoints and a different
@@ -50,17 +51,18 @@ validity limits.
 .venv-deploy/bin/python indy_loco/models/package_tools.py validate
 ```
 
-The validator loads all 60 packaged checkpoint copies, checks identity,
-selection policy, seven-minute preprocessing metadata, SHA-256 hashes,
-Midsize/Large parity, and confirms that CubeAI conversion and Large memory
-promotion have not been claimed prematurely.
+The validator loads all 60 packaged checkpoint copies and checks identity,
+selection policy, seven-minute preprocessing metadata, SHA-256 hashes, and
+Midsize/Large neural parity. Deployment-bank validation is performed by the
+firmware repo's `tools/validate_phase15_bcimem.py` script.
 
-## CubeAI boundary
+## CubeAI and deployment boundary
 
-No ONNX, H5, generated C, weights binary, or `.aibundle` was created or changed
-in this phase. The next conversion phase must use each fold file plus the shared
-[`midsize/model.py`](midsize/model.py). See
-[`CUBEAI_NEXT_PHASE.md`](CUBEAI_NEXT_PHASE.md).
+The six highlighted folds have CubeAI packages under
+`midsize/<session>/cubeai/fold-<best>/`; Large references the same neural
+package instead of duplicating it. The other 24 folds remain Python
+checkpoints for paper evaluation and have not been converted for deployment.
+See [`CUBEAI_NEXT_PHASE.md`](CUBEAI_NEXT_PHASE.md).
 
 The superseded best-test-fold packages and their old PC memlibs are preserved
 under

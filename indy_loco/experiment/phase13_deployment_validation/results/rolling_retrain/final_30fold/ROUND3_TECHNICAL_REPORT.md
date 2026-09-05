@@ -1,5 +1,11 @@
 # Phase 13 Round 3: seven-minute rolling-window retraining
 
+> **Current-state update:** these 30 validation-selected checkpoints were
+> subsequently promoted as the final neural set, six highlighted folds were
+> converted in Phase 14, and the shared Midsize/Large neural ABI is integrated
+> in firmware branch `AI` and GUI branch `deliverable3`. Statements describing
+> work “before promotion” below are historical context for this completed run.
+
 ## Conclusion
 
 Deployment-aligned retraining recovered the rolling/calibration mismatch and
@@ -11,8 +17,9 @@ reach-local score of 0.7089.
 
 This is an unbiased five-fold mean with respect to checkpoint selection: each
 checkpoint was selected using validation loss, saved, and only then evaluated
-on its test targets. It is not a best-test-fold selection result and no model
-has been promoted into `models/`, firmware, or GUI.
+on its test targets. It is not a best-test-fold selection result. At the time
+this run finished no model had yet been promoted; that promotion and the six
+deployment conversions are now complete.
 
 ## Matched decomposition
 
@@ -100,18 +107,20 @@ normalization matching the live session calibration policy; no labels or
 targets from that prefix are used to choose channels, fit target scaling, train
 weights, or select checkpoints.
 
-These are FP32 PyTorch results. Before promotion, selected checkpoints still
-require CubeAI conversion and PC/on-board numeric replay. The experiment also
-does not yet isolate GRU-only tuning, compare seven minutes against other
-calibration durations after retraining, or test genuinely unseen users.
+These table values remain FP32 PyTorch results. Phase 14 later converted the six
+highlighted deployment folds and verified the generated C encoder plus FP32
+GRU/head on PC; Midsize board replay is operational. This experiment still does
+not isolate GRU-only tuning, compare seven minutes against other calibration
+durations after retraining, or test genuinely unseen users.
 
-## Recommended next experiment
+## Optional follow-up experiment
 
 Run the same 30-fold protocol with `--train-scope gru-head` and compare it with
 `final_30fold`. If GRU/head-only tuning preserves most of the +0.0684 gain, it is
 a cleaner and cheaper deployment-alignment method. If it loses materially,
 retain all-weight tuning and treat the improvement as joint encoder/TCN/GRU
-adaptation.
+adaptation. This ablation is not required for the frozen Phase-13 deployment
+and has not replaced the final all-weight checkpoints.
 
 ## Reproducibility
 

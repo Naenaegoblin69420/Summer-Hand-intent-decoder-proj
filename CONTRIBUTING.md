@@ -23,8 +23,9 @@ Within each project:
 - `data/processed/` contains reproducible model-ready arrays;
 - `data/processing/` contains supported conversion code;
 - `models/` contains retained implementations and checkpoints;
-- `experiments/active/` contains at most one approved experiment;
-- `results/` contains only that active experiment's outputs;
+- active experiment code/results live in the project-specific active area
+  (`finger_movements/experiments/active/` for FingerMovements and
+  `indy_loco/experiment/` for the retained Indy/Loco Phase-13–15 evidence);
 - `history/` contains completed immutable experiment provenance;
 - `docs/STATUS.md` is the current technical source of truth;
 - `tests/` protects that project's active artifacts and contracts.
@@ -44,7 +45,8 @@ must update its model decision, tests, status, and experiment log together.
 2. Fit preprocessing inside training folds only.
 3. Do not use an exposed official test set for model selection.
 4. Record inputs, splits, seeds, metrics, checkpoint identity, and limitations.
-5. After review, move the runner and evidence into that project's `history/`.
+5. After review, either freeze retained final evidence in its documented phase
+   directory or move superseded work into that project's `history/`.
 
 Do not create a new phase identifier without approval.
 

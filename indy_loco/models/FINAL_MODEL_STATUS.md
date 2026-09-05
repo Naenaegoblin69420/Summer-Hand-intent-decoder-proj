@@ -47,8 +47,8 @@ reporting rather than an exact reproduction of the paper's model pipeline.
 
 | Tier | Neural folds ready | Compatible memory banks | Current paper R² | Status |
 |---|---:|---:|---:|---|
-| Midsize | 30/30 | not applicable | **0.7411 ± 0.0656** | six best folds promoted to firmware/GUI; board test pending |
-| Large | 30/30 | 30/30 PC evaluation; 0/30 firmware BCIMEM | **0.7498 ± 0.0632** | exact PC KNN validated; firmware conversion pending |
+| Midsize | 30/30 | not applicable | **0.7411 ± 0.0656** | six best folds promoted; Midsize board replay operational |
+| Large | 30/30 | 30 PC evaluation banks; 6 selected-fold BCIMEM images | **0.7498 ± 0.0632** | exact PC KNN and packed firmware-IVF format validated; board parity pending |
 
 Large uses the same neural weights as Midsize and adds residual retrieval.
 Phase 15 rebuilt one train-only bank per fold, tuned retrieval on validation
@@ -66,14 +66,17 @@ memory quality; it does not establish firmware IVF recall or MCU latency.
   H5/TFLite, validated/generated with X-CUBE-AI, packaged as `.aibundle`, and
   replayed through generated C on PC. Six-fold CubeAI diagnostic R² is 0.7941
   versus 0.7944 FP32; this is not the paper estimate.
-- Promoted: six best-fold Midsize bundles, session-specific encoder C graphs,
-  velocity-only GRU graph, Phase-13 replay masks, and seven-minute GUI assets.
-- Not run: the other 24 fold conversions and STM32 board testing.
+- Promoted: six best-fold shared Midsize/Large bundles, session-specific encoder
+  C graphs, the GRU graph with velocity and full hidden-sequence outputs,
+  Phase-13 replay masks, and seven-minute GUI assets.
+- Not converted: the other 24 fold checkpoints. They remain part of the
+  30-fold paper evaluation but are not required by the six-session deployment.
 - Phase-15 PC result: 30 GRU-hidden[49] evaluation banks and cross-validated
   corrected R² are complete under `experiment/phase15_large_memory_validation/`.
-- Pending for Large deployment: convert the six selected best-fold banks to
-  firmware BCIMEM/IVF, then run PC parity, MCU latency, bank-ABSENT/READY, and
-  board validation.
+- Deployment-format result: six selected best-fold banks are packed as
+  `BCIMEM1`; firmware-IVF replay is 0.796320 versus 0.794441 ABSENT.
+- Remaining: Large MCU bank-ABSENT/READY parity and latency, plus a final
+  zero-coalescing replay check after the latest firmware scheduling change.
 
 Source metrics are in
 `../experiment/phase13_deployment_validation/results/rolling_retrain/final_30fold/phase13_round3_folds.csv`

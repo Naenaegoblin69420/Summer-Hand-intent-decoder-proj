@@ -9,20 +9,22 @@ or results from the other.
 | Project | Task | Retained model | Status |
 |---|---|---|---|
 | [`finger_movements/`](finger_movements/) | 28-channel EEG left/right classification | causal 400 ms CSSD + hierarchical LDA | active firmware candidate |
-| [`indy_loco/`](indy_loco/) | intracortical x/y velocity decoding | 32-channel 48/48 TCN+GRU | archived, reproducible reference |
+| [`indy_loco/`](indy_loco/) | intracortical x/y velocity decoding | 96-channel, width-64 causal TCN+GRU; optional GRU-hidden residual memory | active deployment and paper-evaluation package |
 
-Each project owns the same top-level areas:
+Each project keeps active code and evidence separate from historical material.
+The exact directory names differ slightly between the two projects; use each
+project's README and STATUS file as its entry point.
 
 ```text
-<project>/
-├── data/          raw, processed, and processing code
-├── models/        retained model and checkpoint
-├── experiments/   currently active experiment only
-├── results/       currently active result only
-├── history/       completed experiment code and evidence
-├── docs/          current technical status
-├── configs/       project-specific configuration
-└── tests/         project-specific guardrails
+finger_movements/              indy_loco/
+├── data/                      ├── data/
+├── models/                    ├── models/
+├── experiments/              ├── experiment/
+├── results/                   ├── results/
+├── history/                   ├── history/
+├── docs/STATUS.md             └── STATUS.md
+├── configs/
+└── tests/
 ```
 
 The repository root contains only shared collaboration infrastructure:

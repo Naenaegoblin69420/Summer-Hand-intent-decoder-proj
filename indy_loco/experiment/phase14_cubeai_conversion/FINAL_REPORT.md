@@ -31,13 +31,15 @@ validation-selected fold:
 R^2 = \mathbf{0.7411 \pm 0.0656}\quad (30\ folds).
 \]
 
-The canonical conversion ABI is `tcn64i8-gruseq64-xcai10-v1`: INT8 TCN
+The canonical conversion-evaluation ABI is `tcn64i8-gruseq64-xcai10-v1`: INT8 TCN
 encoder with float32 I/O, followed by FP32 GRU/head with velocity and full
 GRU-state-sequence outputs. Large can read `state[49]` as its 64-value
-external-memory query. Compatible Phase-14 memlibs have not yet been built.
+external-memory query. The later deployed ABI retains both outputs and uses
+the six Phase-15-derived `BCIMEM1` banks.
 
-For Midsize, the same verified weights were regenerated as a velocity-only GRU
-and promoted to firmware/GUI under `tcn64i8x6-gru64f32-p13-v3`. This keeps the
-existing fast memory map and avoids an unused 12,800-byte hidden output. The
-six GUI bundles, Phase-13 held-out masks, seven-minute replay assets, and mock
-predictions were rebuilt. Physical board validation is the remaining gate.
+The verified weights were promoted to firmware/GUI under
+`tcn64i8x6-gru64f32-p13-v3`. The current graph exposes a 50 × 2 velocity
+sequence and 50 × 64 hidden sequence; Midsize and Large therefore share one
+neural package. The six GUI bundles, Phase-13 held-out masks, seven-minute
+replay assets, and mock predictions were rebuilt. Large board parity/latency
+remains a separate deployment gate.

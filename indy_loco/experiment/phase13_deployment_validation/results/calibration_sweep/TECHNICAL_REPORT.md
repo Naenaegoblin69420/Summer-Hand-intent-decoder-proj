@@ -1,5 +1,11 @@
 # Phase 13 Round 2: calibration-duration sweep
 
+> **Current-state update:** the seven-minute setting selected here is now the
+> active Phase-13 neural preprocessing contract in the model packages,
+> firmware, and GUI. Prospective implementation steps later in this report are
+> retained as the experiment's decision trail; the remaining deployment gate
+> is final board replay/latency verification, especially for Large.
+
 ## Technical summary
 
 Seven minutes is the recommended calibration duration for the current Midsize
@@ -87,22 +93,21 @@ gain.
 
 This is a retrospective six-session replay. A live user may move differently
 during calibration, and prefix duration is confounded with the amount and
-variety of movement observed. The current result therefore supports a firmware
-A/B candidate, not a universal guarantee. The firmware remains hard-coded to
-1 minute until that change is implemented and tested on-device.
+variety of movement observed. The result established the seven-minute firmware
+candidate, not a universal guarantee. That duration has since been implemented
+in the active firmware/GUI workflow.
 
-## Recommended next steps
+## Follow-up status
 
-1. Add a configurable calibration duration to firmware/GUI and set the test
-   default to 7 minutes; do not silently change the production default yet.
-2. Verify 1 versus 7 minutes on-board for all six packaged sessions, including
-   calibration statistics, CubeAI outputs, latency, SRAM/flash, and watchdog
-   behavior.
-3. For a more usable product, evaluate an adaptive stop rule after 3 minutes:
+1. **Completed:** set the active firmware/GUI calibration contract to seven
+   minutes and retrain all 30 Phase-13 folds for that contract.
+2. **Completed:** convert the six highlighted checkpoints to the current
+   INT8-Encoder/FP32-GRU Cube.AI ABI.
+3. **Remaining product study:** evaluate an adaptive stop rule after 3 minutes:
    stop when channel mean/std and prediction quality proxies stabilize, with a
    hard cap at 7 minutes.
-4. Run the same sweep on genuinely unseen sessions/users before treating 7
-   minutes as a general deployment setting.
+4. **Remaining generalization study:** run the same sweep on genuinely unseen
+   sessions/users before treating 7 minutes as a general deployment setting.
 
 ## Further questions
 

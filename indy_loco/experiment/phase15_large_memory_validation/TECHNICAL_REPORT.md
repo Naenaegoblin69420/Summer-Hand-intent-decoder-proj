@@ -89,6 +89,11 @@ This result must not replace the 30-fold table above: the highlighted
 deployment folds are a demonstrator set and include a negative Large result
 for `loco_20170301_05` fold 1 (0.802525 ABSENT to 0.792472 firmware IVF).
 
+The six packed images are integrated in GUI branch `deliverable3`; firmware
+branch `AI` owns validation, GRU-hidden/context query construction, IVF search,
+residual blending, and bank-ABSENT fallback. Large board parity and latency are
+deployment checks beyond this PC report.
+
 ## Reproducibility
 
 - Runner: `run.py`
